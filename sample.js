@@ -47,18 +47,47 @@ async function main() {
   // containing an embedded object with at least a name and a country.
 
   // ----------------------------------------------------------
+  await books.insertOne({
+    title: "Harrry Potter and the stone",
+    author: "J.K.Rowling",
+    publisher: {
+      name: "UKbook",
+      country: "United Kingdom"
+    }
+  });
   // TODO 2 - insertOne with an array
   // ----------------------------------------------------------
   // Insert one book that has a tags field containing
   // an array of at least 3 strings.
 
   // ----------------------------------------------------------
+  await books.insertOne({
+    title: "Harry Potter and the snake",
+    tags: ["action", "fantasy", "scary"],
+  });
   // TODO 3 - insertMany
   // ----------------------------------------------------------
   // Insert at least 5 books in a single call using insertMany.
   // Include a mix: some with a publisher object, some with tags, some with both.
 
   // ----------------------------------------------------------
+  await books.insertMany([
+    {
+      title: "Harry Potter and the prisoner"
+    },
+    {
+      title: "Harry Potter and the cup"
+    },
+    {
+      title: "Harry Potter and the bird"
+    },
+    {
+      title: "Harry Potter and the prince"
+    },
+    {
+      title: "Harry Potter and the bad guys"
+    },
+  ]);
   // TODO 4 - find all documents
   // ----------------------------------------------------------
   // Retrieve every document in the collection and log each title.
