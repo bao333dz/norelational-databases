@@ -14,21 +14,44 @@ async function main() {
 
   // TODO 1: insert a user with an embedded address object.
   // The address must have at least a city and a country field.
+  await users.insertOne({
+    name: "Bao",
+    address: { city: "Paris", country: "France" },
+  });
 
   // TODO 2: insert a user with a skills array containing at least 3 items.
+  await users.insertOne({
+    name: "Minh",
+    skills: ["JavaScript", "MongoDB", "Node.js"],
+  });
 
   // TODO 3: use insertMany to insert at least 5 users in a single call.
   // Requirements:
   //   - At least 2 users must have address.country set to "France"
   //   - At least 2 users must have a skills array with at least 1 item
+  await users.insertMany([
+    {name: "Success", address: { city: "Lyon", country: "France" }, skills: ["Python"]},
+    {name: "Artem", address: { city: "Nice", country: "France" }, skills: ["SQL"]},
+    {name: "Ola", address: { city: "Berlin", country: "Germany" }},
+    {name: "Mart", address: { city: "Madrid", country: "Spain" }},
+    {name: "Random", address: { city: "Rome", country: "Italy" }},
+  ]);
 
   // TODO 4: retrieve all documents and log each user's name.
+  const allUsers = await users.find().toArray();
+  allUsers.forEach((user) => console.log(user.name));
 
   // TODO 5: use dot notation to find the user whose address.city is "Paris" and log the result.
+  const parisUser = await users.findOne({ "address.city": "Paris" });
+  console.log(parisUser);
 
   // TODO 6: find all users whose address.country is "France" and log their names.
+  const frenchUsers = await users.find({ "address.country": "France" }).toArray();
+  frenchUsers.forEach((user) => console.log(user.name));
 
   // TODO 7: find all users who have a skills field and log their names.
+  const skilledUsers = await users.find({ skills: { $exists: true } }).toArray();
+  skilledUsers.forEach((user) => console.log(user.name));
 
   await client.close();
 }
